@@ -1,58 +1,14 @@
 # coding=utf-8
 
-import glob
-import struct
-import sys
+
 from time import sleep
+import time
 import threading
-
 import serial
+import glob
+import sys
 
-STATUS_ACK = [0xff, 0x55, 0x0d, 0x0a]
-
-
-def float2bytes(fval):
-    """
-    From <https://github.com/Kreativadelar>
-    """
-    val = struct.pack("f", fval)
-    return [ord(val[0]), ord(val[1]), ord(val[2]), ord(val[3])]
-
-
-def long2bytes(lval):
-    """
-    From <https://github.com/Kreativadelar>
-    """
-    val = struct.pack("=l", lval)
-    return [ord(val[0]), ord(val[1]), ord(val[2]), ord(val[3])]
-
-
-def bytes2long(data):
-    return struct.unpack('<l', struct.pack('4B', *data))[0]
-
-
-def bytes2double(data):
-    return struct.unpack('<f', struct.pack('4B', *data))[0]
-
-
-def bytes2short(data):
-    return struct.unpack('<h', struct.pack('2B', *data))[0]
-
-
-def short2bytes(sval):
-    """
-    From <https://github.com/Kreativadelar>
-    """
-    val = struct.pack("h", sval)
-    return [ord(val[0]), ord(val[1])]
-
-
-def char2byte(cval):
-    """
-    From <https://github.com/Kreativadelar>
-    """
-    val = struct.pack("b", cval)
-    return ord(val[0])
+from frame import Frame
 
 
 class SerialCom:
@@ -106,6 +62,44 @@ class SerialCom:
         self._serial.close()
 
 
+class Response:
+    def __init__(self, timestamp, timeout, response_type, response_callback, response_event=None):
+        self.timestamp = timestamp
+        self.timeout = timeout
+        self.response_type = response_type
+        self.response_callback = response_callback
+        self.response_event = response_event
+        self.response_event_data = None
+
+    @staticmethod
+    def generate_response_async(callback, response_type, timeout=0.3):
+        """
+
+        :param callback: función con 2 parámetros (valor_respuesta, timeout). Timeout es true si se ha llamado
+        por timeout y no por respuesta
+        :param response_type:
+        :param timeout:
+        :return:
+        """
+        return Response(time.time(), timeout, response_type, callback, None)
+
+    @staticmethod
+    def generate_response_block(response_type, timeout=0.3):
+        return Response(time.time(), timeout, response_type, None, threading.Event())
+
+    def is_timeout(self):
+        t_max = self.timestamp + self.timeout
+
+        if t_max < time.time():
+            return True
+        else:
+            return False
+
+    def wait_blocking(self):
+        assert self.response_event is not None, "Error, response is not blocking"
+        self.response_event.wait()
+
+
 class AurigaPy:
     def __init__(self, debug=False):
 
@@ -113,146 +107,138 @@ class AurigaPy:
         self.th = None
         self.exiting = False
         self._read_buffer = []
-        self._callback = []
-        self._on_callback = None
-        self._on_callback_data = None
+        self._responsers = []
         self.debug = debug
 
-    def _set_default_callback(self, data):
-        self._on_callback_data = data
-        self._on_callback.set()
+    def add_responder(self, responder):
+        self._responsers.append(responder)
 
-    def _prepare_callback(self, callback):
-        # Si no hay callback espero a recibir la respuesta
-        if callback is None:
-            self._on_callback = threading.Event()
-            self._callback.append(self._set_default_callback)
+    def connect(self, port):
 
-    def _process_callback(self, callback, sleep_time=0):
-        # Si no hay callback espero a que este libere la ejecucion
-        if callback is None:
-            if self.debug:
-                print("Waiting to callback")
-            self._on_callback.wait()
-            #self._on_callback = None
+        rp = Response.generate_response_block(Frame.FRAME_TYPE_VERSION, timeout=2)
+        self.add_responder(rp)
 
-            # Si no hay callback me espero el tiempo indicado a devolver el control
-            # para que la placa haya terminado de ejecutar el comando
-            sleep(sleep_time)
-
-            return self._on_callback_data
-        # Sino lo anyado a la lista de callbacks a procesar
-        else:
-            # TODO: Avisar que aqui no se espera el tiempo, lo debe gestionar quien lo implemente
-            self._callback.append(callback)
-            return None
-
-    def _process_callback_nonblocking(self, callback, sleep_time=0):
-        # Si no hay callback espero a que este libere la ejecucion
-        if callback is None:
-            #self._on_callback.wait()
-            #self._on_callback = None
-
-            # Si no hay callback me espero el tiempo indicado a devolver el control
-            # para que la placa haya terminado de ejecutar el comando
-            sleep(sleep_time)
-
-            return self._on_callback_data
-        # Sino lo anyado a la lista de callbacks a procesar
-        else:
-            # TODO: Avisar que aqui no se espera el tiempo, lo debe gestionar quien lo implemente
-            self._callback.append(callback)
-            return None
-
-    def connect(self, port, callback=None):
         self._serial.connect(port)
-
-        self._prepare_callback(callback)
         self.th = threading.Thread(target=self._data_reader, args=())
         self.th.start()
 
-        self._process_callback(callback, sleep_time=2)
+        rp.wait_blocking()
 
-    #No bloquea esperando respuesta de la placa (en bluetooth no responde)
-    def connect_wait_no_response(self, port, callback=None):
-        self._serial.connect(port)
+    def _process_frame(self, frame):
 
-        self._prepare_callback(callback)
-        self.th = threading.Thread(target=self._data_reader, args=())
-        self.th.start()
+        # Hay callbacks?
+        if len(self._responsers) > 0:
 
-    def _is_pkg(self, data):
-        if len(data) >= 4:
-            # Verifico el fin de la trama
-            if data[-2:] == [0x0d, 0x0a]:
-                return True
-            else:
-                return False
+            # Callback timeout?
+            r = self._responsers.pop(0)
 
-        else:
-            return False
+            if r.is_timeout():
+                # El tiempo del callback ha pasado. Notifico que muere
 
-    def _process_pkg(self, data):
-        if len(self._callback) > 0:
-            cb = self._callback.pop(0)
-            if cb is not None:
-                if data[0:4] == [0xff, 0x55, 0x00, 0x01]:  # Byte
-                    cb(data[4:])
-                elif data[0:4] == [0xff, 0x55, 0x00, 0x02]:  # 2Byte Float
-                    value = bytes2double(data[4:8])
-                    if value < -512 or value > 1023:
-                        value = 0
-                    cb(value)
-                elif data[0:4] == [0xff, 0x55, 0x00, 0x03]:  # Short
-                    cb(bytes2short(data[4:8]))
-                elif data[0:4] == [0xff, 0x55, 0x00, 0x04]:  # String
-                    s = ''.join([chr(s) for s in data[4:]])
-                    cb(s)
-                elif data[0:4] == [0xff, 0x55, 0x00, 0x05]:  # Double
-                    cb(bytes2double(data[4:8]))
-                elif data[0:4] == [0xff, 0x55, 0x00, 0x06]:  # Long
-                    cb(bytes2long(data[4:8]))
-                elif data[0:4] == STATUS_ACK:
-                    cb("ACK")
-                elif data[0:8] == [0x56, 0x65, 0x72, 0x73, 0x69, 0x6f, 0x6e, 0x3a]:
-                    # Trama de inicio de conexión (str)
-                    s = ''.join([chr(s) for s in data])
-                    cb(s)
-                # No se lo que es, lo paso a string
+                if r.response_callback is None:
+                    r.response_event.set()  # Se trata de una llamada blocking. Le doy paso
                 else:
-                    print("Warning: Unknown msg received")
-                    s = ''.join([chr(s) for s in data])
-                    cb(s)
+                    r.response_callback(value=None, timeout=True)  # Llamo al callback
+
+                # Se descarta este callbacl pero se vuelve a procesar el paquete
+                self._process_frame(frame)
+
+            # Callback vivo
             else:
-                # Se recibió un paquete pero no hay callback registrado para procesarlo
-                assert True, "Error, unexpected data received %r" % data
+                # Es compatible el timestamp de este frame con el callback?
+                if r.timestamp > frame.timestamp:
+                    # El frame es mas nuevo que el callback, no es compatible
+                    if self.debug:
+                        print("Frame of type %r discarted: %r" % (frame.frame_type, frame))
+                else:
+                    # Es compatible por tipo?
+                    if r.response_type == frame.frame_type:
+                        # Es compatible por tipo
+
+                        if r.response_callback is None:
+                            r.response_event_data = frame.frame_value
+                            r.response_event.set()  # Se trata de una llamada blocking. Le doy paso
+                        else:
+                            r.response_callback(value=frame.frame_value, timeout=False)  # Llamo el callback
+                    else:
+                        # No compatible por tipo
+                        # Existe un callback posterior que pueda manejar este frame?
+                        discart_callback = False
+
+                        if len(self._responsers) > 1:
+                            for tr in self._responsers[1:]:
+                                if tr.timestamp > frame.timestamp and tr.response_type == frame.frame_type:
+                                    # Hay un callback posterior compatible. Descarto este
+                                    discart_callback = True
+                                    break
+                        else:
+                            discart_callback = True
+
+                        # Hay un callback posterior compatible. Descarto este
+                        if discart_callback:
+                            if self.debug:
+                                print("Callback of type %r discarted: %r" % (r.response_type, r.response_callback))
+
+                            if r.response_callback is None:
+                                r.response_event.set()  # Se trata de una llamada blocking. Le doy paso
+                            else:
+                                r.response_callback(value=None, timeout=True)  # Llamo el callback
+                        else:
+                            # Proceso el paquete con callback posterior
+                            self._process_frame(frame)
         else:
-            print 'Ignoring [{}]'.format(', '.join(hex(x) for x in data))
+            # No hay callbacks. Se descarta el frame
+            if self.debug:
+                print("Frame of type %r discarted: %r" % (frame.frame_type, frame))
 
     def _data_reader(self):
+        """
+        Thread que procesa la lectura del puerto serie. Se encarga de detectar paquetes y someterlos a
+        _process_pkg
+        :return:
+        """
         while True:
+
+            if self._serial.is_open() is True:
+                n = self._serial.in_waiting()
+                for i in range(n):
+                    r = ord(self._serial.read())
+                    self._read_buffer.append(r)
+
+                sleep(0.01)
+
+                # Si existe un paquete lo proceso y borro el bufer de lectura
+                if Frame.is_frame(self._read_buffer):
+                    if self.debug:
+                        print 'Processing [{}]'.format(', '.join(hex(x) for x in self._read_buffer))
+
+                    frame = Frame.generate_from_data(list(self._read_buffer))
+                    self._process_frame(frame)
+                    self._read_buffer = []
+            else:
+                sleep(0.5)
+                # Nota: se podrian descartar paquetes si no se mandase todo seguido.
+                self._read_buffer = []
+
+            # Verifico el timeout de los callbacks
+            for r in self._responsers:
+                if r.is_timeout():
+                    if r.response_callback is None:
+                        r.response_event.set()  # Se trata de una llamada blocking. Le doy paso
+                    else:
+                        r.response_callback(value=None, timeout=True)  # Llamo al callback
+                    self._responsers.remove(r)
+
             if self.exiting is True:
+                # Notifico callbacks y muero
+                for r in self._responsers:
+                    if r.response_callback is None:
+                        r.response_event.set()  # Se trata de una llamada blocking. Le doy paso
+                    else:
+                        r.response_callback(value=None, timeout=True)  # Llamo al callback
+                    self._responsers.remove(r)
+
                 break
-            try:
-                if self._serial.is_open() == True:
-                    n = self._serial.in_waiting()
-                    for i in range(n):
-                        r = ord(self._serial.read())
-                        self._read_buffer.append(r)
-                    sleep(0.01)
-
-                    # Si existe un paquete lo proceso y borro el bufer de lectura
-                    if self._is_pkg(self._read_buffer):
-                        if self.debug:
-                            print 'Processing [{}]'.format(', '.join(hex(x) for x in self._read_buffer))
-                        self._process_pkg(list(self._read_buffer))
-                        self._read_buffer = []
-
-                else:
-                    sleep(0.5)
-            except Exception, ex:
-                print str(ex)
-                sleep(1)
 
     def _write(self, data):
         if self.debug:
@@ -260,31 +246,53 @@ class AurigaPy:
         self._serial.write(data)
 
     def reset_robot(self):
-        self._prepare_callback(None)
+        rp = Response.generate_response_block(Frame.FRAME_TYPE_ACK, timeout=2)
+        self.add_responder(rp)
+
         self._serial.write(bytearray([0xff, 0x55, 0x2, 0x0, 0x4]))
         self._read_buffer = []
+
+        rp.wait_blocking()
 
     # ff 55 09 00 02 08 00 02
     # Led 0 son todos
     def set_led_onboard(self, led, r, g, b, callback=None):
         assert led >= 0 and led < 12, "Error, led fuera de rango"
-        self._prepare_callback(callback)
+
+        if callback is None:
+            rp = Response.generate_response_block(Frame.FRAME_TYPE_ACK, timeout=0.1)
+        else:
+            rp = Response.generate_response_async(callback, Frame.FRAME_TYPE_ACK)
+
+        self.add_responder(rp)
+
         data = bytearray([0xff, 0x55, 0x09, 0x00, 0x02, 0x08, 0x00, 0x02,
                           led, r, g, b])
         # print '[{}]'.format(', '.join(hex(x) for x in data))
         self._write(data)
-        self._process_callback_nonblocking(callback)
+
+        if callback is None:
+            rp.wait_blocking()
+
 
     # ff 55 0b 00 02 3e 01 <slot> <long4 degrees> 0 0 <short2 vel>
     def set_encoder_motor_rotate(self, slot, degrees, speed, callback=None):
         assert slot == 1 or slot == 2, "Error, slot not defined"
-        self._prepare_callback(callback)
+
+        if callback is None:
+            rp = Response.generate_response_block(Frame.FRAME_TYPE_ACK, timeout=0.1)
+        else:
+            rp = Response.generate_response_async(callback, Frame.FRAME_TYPE_ACK)
+
         data = bytearray([0xff, 0x55, 0x0b, 0x00, 0x02, 0x3e, 0x01, slot] +
                          long2bytes(degrees) +
                          short2bytes(speed))
         # print '[{}]'.format(', '.join(hex(x) for x in data))
         self._write(data)
-        self._process_callback(callback, sleep_time=0.1)
+
+        if callback is None:
+            rp.wait_blocking()
+
 
     def set_command_until(self, command, degrees, speed, callback=None):
         # ff 55 0b 00 02 3e 05 <cmd> <4long degrees> <2short speed>
@@ -292,14 +300,21 @@ class AurigaPy:
         assert command in commands, "Error, %r command not in %r" % (command, str(commands))
         ind = 1 + commands.index(command)
 
-        self._prepare_callback(callback)
+        if callback is None:
+            rp = Response.generate_response_block(Frame.FRAME_TYPE_ACK, timeout=0.1)
+        else:
+            rp = Response.generate_response_async(callback, Frame.FRAME_TYPE_ACK)
+
         data = bytearray([0xff, 0x55, 0x0b, 0x00, 0x02, 0x3e, 0x05, ind] +
                          long2bytes(degrees) +
                          short2bytes(speed))
 
         # print '[{}]'.format(', '.join(hex(x) for x in data))
         self._write(data)
-        self._process_callback(callback, sleep_time=0.1)
+
+        if callback is None:
+            rp.wait_blocking()
+
 
     def set_command(self, command, speed, callback=None):
         # ff 55 07 00 02 05 <2short speedleft> <2short speedright>
@@ -321,32 +336,43 @@ class AurigaPy:
         else:
             assert True, "Error in set_command"
 
-        self._prepare_callback(callback)
+        if callback is None:
+            rp = Response.generate_response_block(Frame.FRAME_TYPE_ACK, timeout=0.1)
+        else:
+            rp = Response.generate_response_async(callback, Frame.FRAME_TYPE_ACK)
+
         data = bytearray([0xff, 0x55, 0x07, 0x00, 0x02, 0x5] +
                          short2bytes(speed_left) +
                          short2bytes(speed_right))
 
         # print '[{}]'.format(', '.join(hex(x) for x in data))
         self._write(data)
-        self._process_callback(callback, sleep_time=0)
 
-    # ff 55 06 00 01 3d 00 <slot> 02
-    def get_encoder_motor_speed(self, slot, callback=None):
-        assert slot == 1 or slot == 2, "Error, slot not defined"
-        self._prepare_callback(callback)
-        data = bytearray([0xff, 0x55, 6, 0, 1, 0x3d, 0, slot, 2])
-        # print '[{}]'.format(', '.join(hex(x) for x in data))
-        self._write(data)
-        return self._process_callback(callback, sleep_time=0.1)
+        if callback is None:
+            rp.wait_blocking()
+
+
+
+    # START TODO:
 
     # ff 55 06 00 01 3d 00 <slot> 01
     def get_encoder_motor_degrees(self, slot, callback=None):
         assert slot == 1 or slot == 2, "Error, slot not defined"
-        self._prepare_callback(callback)
+
+        if callback is None:
+            rp = Response.generate_response_block(Frame.FRAME_TYPE_ACK, timeout=0.1)
+        else:
+            rp = Response.generate_response_async(callback, Frame.FRAME_TYPE_ACK)
+
         data = bytearray([0xff, 0x55, 6, 0, 1, 0x3d, 0, slot, 1])
         # print '[{}]'.format(', '.join(hex(x) for x in data))
         self._write(data)
-        return self._process_callback(callback, sleep_time=0.1)
+
+
+        if callback is None:
+            rp.wait_blocking()
+
+        return rp.response_event_data
 
     # ff 55 04 00 01 01 <port>
     def get_ultrasonic_reading(self, port, callback=None):
@@ -402,6 +428,10 @@ class AurigaPy:
         data = bytearray([0xff, 0x55, 5, 0, 1, 6, 1, axis_ind])
         self._write(data)
         return self._process_callback(callback)
+
+    #END TODO
+
+
 
     def close(self):
 
