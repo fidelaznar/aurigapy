@@ -268,7 +268,6 @@ class AurigaPy:
             e1 = abs(self.get_encoder_motor_speed(1))
             e2 = abs(self.get_encoder_motor_speed(2))
             vel = e1 + e2 if e1 is not None and e2 is not None else 0.01
-            print(vel)
             sleep(0.1)
 
 
