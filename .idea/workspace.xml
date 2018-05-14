@@ -2,7 +2,20 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="95d1b233-d306-4898-ac00-cba004a8fc25" name="Default" comment="">
+      <change afterPath="$PROJECT_DIR$/../../../03 Investigación/ipythonnotebooks/AurigaPy/samples/ultrasonic_callback.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../03 Investigación/ipythonnotebooks/AurigaPy/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../03 Investigación/ipythonnotebooks/AurigaPy/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../../03 Investigación/ipythonnotebooks/AurigaPy/aurigapy.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../../03 Investigación/ipythonnotebooks/AurigaPy/aurigapy.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../03 Investigación/ipythonnotebooks/AurigaPy/samples/command.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../03 Investigación/ipythonnotebooks/AurigaPy/samples/encoder_rotate.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../03 Investigación/ipythonnotebooks/AurigaPy/samples/giro.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../../03 Investigación/ipythonnotebooks/AurigaPy/samples/giro.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../03 Investigación/ipythonnotebooks/AurigaPy/samples/leds.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../../03 Investigación/ipythonnotebooks/AurigaPy/samples/leds.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../03 Investigación/ipythonnotebooks/AurigaPy/samples/light.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../../03 Investigación/ipythonnotebooks/AurigaPy/samples/light.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../03 Investigación/ipythonnotebooks/AurigaPy/samples/line.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../../03 Investigación/ipythonnotebooks/AurigaPy/samples/line.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../03 Investigación/ipythonnotebooks/AurigaPy/samples/move_example.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../../03 Investigación/ipythonnotebooks/AurigaPy/samples/move_example.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../03 Investigación/ipythonnotebooks/AurigaPy/samples/move_until_example.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../../03 Investigación/ipythonnotebooks/AurigaPy/samples/move_until_example.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../03 Investigación/ipythonnotebooks/AurigaPy/samples/sound.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../../03 Investigación/ipythonnotebooks/AurigaPy/samples/sound.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../03 Investigación/ipythonnotebooks/AurigaPy/samples/temperature.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../../03 Investigación/ipythonnotebooks/AurigaPy/samples/temperature.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../03 Investigación/ipythonnotebooks/AurigaPy/samples/ultrasonic.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../../03 Investigación/ipythonnotebooks/AurigaPy/samples/ultrasonic.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -13,28 +26,51 @@
   </component>
   <component name="CoverageDataManager">
     <SUITE FILE_PATH="coverage/AurigaPy$aurigapy.coverage" NAME="aurigapy Coverage Results" MODIFIED="1526058853344" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/AurigaPy$giro.coverage" NAME="giro Coverage Results" MODIFIED="1526122655292" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/samples" />
-    <SUITE FILE_PATH="coverage/AurigaPy$sound.coverage" NAME="sound Coverage Results" MODIFIED="1526122735046" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/samples" />
-    <SUITE FILE_PATH="coverage/AurigaPy$line.coverage" NAME="line Coverage Results" MODIFIED="1526122405848" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/samples" />
+    <SUITE FILE_PATH="coverage/AurigaPy$giro.coverage" NAME="giro Coverage Results" MODIFIED="1526307391284" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../../../03 Investigación/ipythonnotebooks/AurigaPy/samples" />
+    <SUITE FILE_PATH="coverage/AurigaPy$ultrasonic_callback.coverage" NAME="ultrasonic_callback Coverage Results" MODIFIED="1526306611667" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../../../03 Investigación/ipythonnotebooks/AurigaPy/samples" />
+    <SUITE FILE_PATH="coverage/AurigaPy$sound.coverage" NAME="sound Coverage Results" MODIFIED="1526307058147" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../../../03 Investigación/ipythonnotebooks/AurigaPy/samples" />
+    <SUITE FILE_PATH="coverage/AurigaPy$move_until_example__1_.coverage" NAME="move_until_example (1) Coverage Results" MODIFIED="1526306238884" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../../../03 Investigación/ipythonnotebooks/AurigaPy/samples" />
+    <SUITE FILE_PATH="coverage/AurigaPy$line.coverage" NAME="line Coverage Results" MODIFIED="1526307379420" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../../../03 Investigación/ipythonnotebooks/AurigaPy/samples" />
     <SUITE FILE_PATH="coverage/AurigaPy$move_example__1_.coverage" NAME="move_example (1) Coverage Results" MODIFIED="1526145566292" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/samples" />
-    <SUITE FILE_PATH="coverage/AurigaPy$ultrasonic.coverage" NAME="ultrasonic Coverage Results" MODIFIED="1526121928093" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/samples" />
-    <SUITE FILE_PATH="coverage/AurigaPy$temperature.coverage" NAME="temperature Coverage Results" MODIFIED="1526122463552" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/samples" />
-    <SUITE FILE_PATH="coverage/AurigaPy$light.coverage" NAME="light Coverage Results" MODIFIED="1526122115998" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/samples" />
+    <SUITE FILE_PATH="coverage/AurigaPy$ultrasonic.coverage" NAME="ultrasonic Coverage Results" MODIFIED="1526306415517" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../../../03 Investigación/ipythonnotebooks/AurigaPy/samples" />
+    <SUITE FILE_PATH="coverage/AurigaPy$temperature.coverage" NAME="temperature Coverage Results" MODIFIED="1526307149221" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../../../03 Investigación/ipythonnotebooks/AurigaPy/samples" />
+    <SUITE FILE_PATH="coverage/AurigaPy$light.coverage" NAME="light Coverage Results" MODIFIED="1526306834637" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../../../03 Investigación/ipythonnotebooks/AurigaPy/samples" />
     <SUITE FILE_PATH="coverage/AurigaPy$leds.coverage" NAME="leds Coverage Results" MODIFIED="1526147453178" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/samples" />
     <SUITE FILE_PATH="coverage/AurigaPy$encoder_rotate.coverage" NAME="encoder_rotate Coverage Results" MODIFIED="1526118929051" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/samples" />
-    <SUITE FILE_PATH="coverage/AurigaPy$move_example.coverage" NAME="move_until_example Coverage Results" MODIFIED="1526147918239" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/samples" />
-    <SUITE FILE_PATH="coverage/AurigaPy$leds__1_.coverage" NAME="leds (1) Coverage Results" MODIFIED="1526295993243" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../../../03 Investigación/ipythonnotebooks/AurigaPy/samples" />
+    <SUITE FILE_PATH="coverage/AurigaPy$leds__1_.coverage" NAME="leds (1) Coverage Results" MODIFIED="1526302259386" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../../../03 Investigación/ipythonnotebooks/AurigaPy/samples" />
+    <SUITE FILE_PATH="coverage/AurigaPy$move_example.coverage" NAME="move_example Coverage Results" MODIFIED="1526307503379" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../../../03 Investigación/ipythonnotebooks/AurigaPy/samples" />
     <SUITE FILE_PATH="coverage/AurigaPy$command.coverage" NAME="command Coverage Results" MODIFIED="1526121159322" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/samples" />
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="aurigapy.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="aurigapy.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../../../03 Investigación/ipythonnotebooks/AurigaPy/aurigapy.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1072">
-              <caret line="171" column="59" lean-forward="true" selection-start-line="171" selection-start-column="59" selection-end-line="171" selection-end-column="59" />
+            <state relative-caret-position="210">
+              <caret line="14" column="16" selection-start-line="14" selection-start-column="16" selection-end-line="14" selection-end-column="16" />
               <folding>
                 <element signature="e#17#39#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="move_example.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/../../../03 Investigación/ipythonnotebooks/AurigaPy/samples/move_example.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="90">
+              <caret line="8" column="33" lean-forward="true" selection-start-line="8" selection-start-column="33" selection-end-line="8" selection-end-column="33" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="frame.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../../../03 Investigación/ipythonnotebooks/AurigaPy/frame.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="73">
+              <caret line="50" column="27" lean-forward="true" selection-start-line="50" selection-start-column="27" selection-end-line="50" selection-end-column="27" />
+              <folding>
+                <element signature="e#0#11#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -43,32 +79,17 @@
       <file leaf-file-name="threading.py" pinned="false" current-in-tab="false">
         <entry file="file://$USER_HOME$/miniconda3/envs/auriga/lib/python2.7/threading.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="127">
+            <state relative-caret-position="15">
               <caret line="753" selection-start-line="753" selection-end-line="753" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="frame.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../../../03 Investigación/ipythonnotebooks/AurigaPy/frame.py">
+      <file leaf-file-name="giro.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../../../03 Investigación/ipythonnotebooks/AurigaPy/samples/giro.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1605">
-              <caret line="107" column="53" lean-forward="true" selection-start-line="107" selection-start-column="53" selection-end-line="107" selection-end-column="53" />
-              <folding>
-                <element signature="e#0#11#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="leds.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../../../03 Investigación/ipythonnotebooks/AurigaPy/samples/leds.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="192">
-              <caret line="27" column="14" lean-forward="true" selection-start-line="27" selection-start-column="14" selection-end-line="27" selection-end-column="14" />
-              <folding>
-                <element signature="e#0#22#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="225">
+              <caret line="17" column="8" selection-start-line="17" selection-start-column="8" selection-end-line="17" selection-end-column="8" />
             </state>
           </provider>
         </entry>
@@ -115,7 +136,16 @@
         <option value="$PROJECT_DIR$/../../../03 Investigación/ipythonnotebooks/AurigaPy/serialcom.py" />
         <option value="$PROJECT_DIR$/../../../03 Investigación/ipythonnotebooks/AurigaPy/frame.py" />
         <option value="$PROJECT_DIR$/../../../03 Investigación/ipythonnotebooks/AurigaPy/samples/leds.py" />
+        <option value="$PROJECT_DIR$/../../../03 Investigación/ipythonnotebooks/AurigaPy/samples/move_until_example.py" />
+        <option value="$PROJECT_DIR$/../../../03 Investigación/ipythonnotebooks/AurigaPy/samples/ultrasonic.py" />
+        <option value="$PROJECT_DIR$/../../../03 Investigación/ipythonnotebooks/AurigaPy/samples/ultrasonic_callback.py" />
+        <option value="$PROJECT_DIR$/../../../03 Investigación/ipythonnotebooks/AurigaPy/samples/light.py" />
+        <option value="$PROJECT_DIR$/../../../03 Investigación/ipythonnotebooks/AurigaPy/samples/sound.py" />
+        <option value="$PROJECT_DIR$/../../../03 Investigación/ipythonnotebooks/AurigaPy/samples/temperature.py" />
+        <option value="$PROJECT_DIR$/../../../03 Investigación/ipythonnotebooks/AurigaPy/samples/line.py" />
+        <option value="$PROJECT_DIR$/../../../03 Investigación/ipythonnotebooks/AurigaPy/samples/giro.py" />
         <option value="$PROJECT_DIR$/../../../03 Investigación/ipythonnotebooks/AurigaPy/aurigapy.py" />
+        <option value="$PROJECT_DIR$/../../../03 Investigación/ipythonnotebooks/AurigaPy/samples/move_example.py" />
       </list>
     </option>
   </component>
@@ -129,17 +159,16 @@
     <packageJsonPaths />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="55" />
+    <option name="x" value="70" />
     <option name="y" value="23" />
-    <option name="width" value="1865" />
-    <option name="height" value="1057" />
+    <option name="width" value="1199" />
+    <option name="height" value="777" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -156,6 +185,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -166,6 +196,7 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/../../../03 Investigación/ipythonnotebooks/AurigaPy/samples" />
       <recent name="$PROJECT_DIR$/samples" />
     </key>
   </component>
@@ -181,27 +212,8 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.leds (1)">
+  <component name="RunManager" selected="Python.move_example">
     <configuration name="giro" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="AurigaPy" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/samples" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/samples/giro.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-    </configuration>
-    <configuration name="leds (1)" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="AurigaPy" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -214,7 +226,7 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/../../../03 Investigación/ipythonnotebooks/AurigaPy/samples/leds.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/../../../03 Investigación/ipythonnotebooks/AurigaPy/samples/giro.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -239,7 +251,7 @@
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
     </configuration>
-    <configuration name="move_example (1)" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="line" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="AurigaPy" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -247,12 +259,31 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/samples" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/../../../03 Investigación/ipythonnotebooks/AurigaPy/samples" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/samples/move_example.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/../../../03 Investigación/ipythonnotebooks/AurigaPy/samples/line.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+    </configuration>
+    <configuration name="move_example" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="AurigaPy" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/../../../03 Investigación/ipythonnotebooks/AurigaPy/samples" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/../../../03 Investigación/ipythonnotebooks/AurigaPy/samples/move_example.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -285,12 +316,31 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/samples" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/../../../03 Investigación/ipythonnotebooks/AurigaPy/samples" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/samples/sound.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/../../../03 Investigación/ipythonnotebooks/AurigaPy/samples/sound.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+    </configuration>
+    <configuration name="temperature" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="AurigaPy" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/../../../03 Investigación/ipythonnotebooks/AurigaPy/samples" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/../../../03 Investigación/ipythonnotebooks/AurigaPy/samples/temperature.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -299,17 +349,19 @@
     <list>
       <item itemvalue="Python.leds" />
       <item itemvalue="Python.move_until_example" />
-      <item itemvalue="Python.giro" />
       <item itemvalue="Python.sound" />
-      <item itemvalue="Python.move_example (1)" />
-      <item itemvalue="Python.leds (1)" />
+      <item itemvalue="Python.temperature" />
+      <item itemvalue="Python.line" />
+      <item itemvalue="Python.giro" />
+      <item itemvalue="Python.move_example" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.leds (1)" />
-        <item itemvalue="Python.move_example (1)" />
-        <item itemvalue="Python.sound" />
+        <item itemvalue="Python.move_example" />
         <item itemvalue="Python.giro" />
+        <item itemvalue="Python.line" />
+        <item itemvalue="Python.temperature" />
+        <item itemvalue="Python.sound" />
       </list>
     </recent_temporary>
   </component>
@@ -331,27 +383,34 @@
       <option name="project" value="LOCAL" />
       <updated>1526296558656</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="* Reescrito el nucleo, faltan adaptar algunos comandos y los ejemplos">
+      <created>1526296856483</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1526296856483</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="55" y="23" width="1865" height="1057" extended-state="6" />
+    <frame x="70" y="23" width="1199" height="777" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
       <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.32916668" />
       <window_info anchor="bottom" id="Version Control" order="7" />
       <window_info anchor="bottom" id="Python Console" order="7" weight="0.32916668" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.31764707" />
       <window_info anchor="bottom" id="Terminal" order="7" />
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49689442" visible="true" weight="0.25507405" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49568966" visible="true" weight="0.31633535" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="right" id="Database" order="3" />
       <window_info anchor="right" id="SciView" order="3" />
-      <window_info id="Structure" order="1" sideWeight="0.5031056" side_tool="true" visible="true" weight="0.25507405" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info id="Structure" order="1" sideWeight="0.50431037" side_tool="true" visible="true" weight="0.31633535" />
       <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -374,14 +433,7 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/aurigapy.py</url>
-          <line>339</line>
-          <option name="timeStamp" value="18" />
-        </line-breakpoint>
-      </breakpoints>
-      <option name="time" value="27" />
+      <option name="time" value="28" />
     </breakpoint-manager>
   </component>
   <component name="debuggerHistoryManager">
@@ -426,6 +478,43 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/../../../03 Investigación/ipythonnotebooks/AurigaPy/aurigapy.py">
       <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4020">
+          <caret line="268" column="73" lean-forward="true" selection-start-line="268" selection-start-column="73" selection-end-line="268" selection-end-column="73" />
+          <folding>
+            <element signature="e#17#39#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/miniconda3/envs/auriga/lib/python2.7/threading.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="11295">
+          <caret line="753" selection-start-line="753" selection-end-line="753" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../../03 Investigación/ipythonnotebooks/AurigaPy/frame.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1605">
+          <caret line="107" column="53" lean-forward="true" selection-start-line="107" selection-start-column="53" selection-end-line="107" selection-end-column="53" />
+          <folding>
+            <element signature="e#0#11#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../../03 Investigación/ipythonnotebooks/AurigaPy/samples/leds.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="27" column="14" lean-forward="true" selection-start-line="27" selection-start-column="14" selection-end-line="27" selection-end-column="14" />
+          <folding>
+            <element signature="e#0#22#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../../03 Investigación/ipythonnotebooks/AurigaPy/aurigapy.py">
+      <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3465">
           <caret line="231" column="57" lean-forward="true" selection-start-line="231" selection-start-column="57" selection-end-line="231" selection-end-column="57" />
           <folding>
@@ -461,110 +550,117 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../../../03 Investigación/ipythonnotebooks/AurigaPy/samples/encoder_rotate.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="113">
-          <caret line="10" column="8" lean-forward="true" selection-start-line="10" selection-start-column="8" selection-end-line="10" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../../03 Investigación/ipythonnotebooks/AurigaPy/samples/giro.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="26" column="16" lean-forward="true" selection-start-line="26" selection-start-column="16" selection-end-line="26" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../../03 Investigación/ipythonnotebooks/AurigaPy/samples/temperature.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="20" selection-start-line="20" selection-end-line="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../../03 Investigación/ipythonnotebooks/AurigaPy/samples/command.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="199">
-          <caret line="45" selection-start-line="45" selection-end-line="45" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../../03 Investigación/ipythonnotebooks/AurigaPy/samples/move_example.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="435">
-          <caret line="31" column="43" selection-start-line="31" selection-start-column="43" selection-end-line="31" selection-end-column="43" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../../03 Investigación/ipythonnotebooks/AurigaPy/samples/light.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="14" column="20" selection-start-line="14" selection-start-column="20" selection-end-line="14" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../../../03 Investigación/ipythonnotebooks/AurigaPy/samples/move_until_example.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="495">
-          <caret line="33" lean-forward="true" selection-start-line="33" selection-end-line="33" />
+        <state relative-caret-position="105">
+          <caret line="9" lean-forward="true" selection-start-line="9" selection-end-line="9" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../../../03 Investigación/ipythonnotebooks/AurigaPy/samples/line.py">
+    <entry file="file://$PROJECT_DIR$/../../../03 Investigación/ipythonnotebooks/AurigaPy/samples/ultrasonic_callback.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="21" column="40" selection-start-line="21" selection-start-column="40" selection-end-line="21" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../../03 Investigación/ipythonnotebooks/AurigaPy/samples/sound.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="20" column="36" selection-start-line="20" selection-start-column="36" selection-end-line="20" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../../03 Investigación/ipythonnotebooks/AurigaPy/samples/ultrasonic.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="19" column="17" selection-start-line="19" selection-start-column="17" selection-end-line="19" selection-end-column="17" />
+        <state relative-caret-position="345">
+          <caret line="25" column="13" selection-start-line="25" selection-start-column="13" selection-end-line="25" selection-end-column="13" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/../../../03 Investigación/ipythonnotebooks/AurigaPy/frame.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1605">
-          <caret line="107" column="53" lean-forward="true" selection-start-line="107" selection-start-column="53" selection-end-line="107" selection-end-column="53" />
+        <state relative-caret-position="73">
+          <caret line="50" column="27" lean-forward="true" selection-start-line="50" selection-start-column="27" selection-end-line="50" selection-end-column="27" />
           <folding>
             <element signature="e#0#11#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$USER_HOME$/miniconda3/envs/auriga/lib/python2.7/threading.py">
+    <entry file="file://$PROJECT_DIR$/../../../03 Investigación/ipythonnotebooks/AurigaPy/samples/light.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="127">
-          <caret line="753" selection-start-line="753" selection-end-line="753" />
+        <state relative-caret-position="315">
+          <caret line="23" column="16" lean-forward="true" selection-start-line="23" selection-start-column="16" selection-end-line="23" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../../03 Investigación/ipythonnotebooks/AurigaPy/samples/sound.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="17" column="7" selection-start-line="17" selection-start-column="7" selection-end-line="17" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../../03 Investigación/ipythonnotebooks/AurigaPy/samples/ultrasonic.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="315">
+          <caret line="23" column="16" lean-forward="true" selection-start-line="23" selection-start-column="16" selection-end-line="23" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../../03 Investigación/ipythonnotebooks/AurigaPy/samples/temperature.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="15" column="18" lean-forward="true" selection-start-line="15" selection-start-column="18" selection-end-line="15" selection-end-column="18" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/../../../03 Investigación/ipythonnotebooks/AurigaPy/samples/leds.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="192">
-          <caret line="27" column="14" lean-forward="true" selection-start-line="27" selection-start-column="14" selection-end-line="27" selection-end-column="14" />
+        <state relative-caret-position="27">
+          <caret line="19" selection-start-line="19" selection-end-line="19" selection-end-column="33" />
           <folding>
             <element signature="e#0#22#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$USER_HOME$/miniconda3/envs/auriga/lib/python2.7/threading.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="753" selection-start-line="753" selection-end-line="753" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../../03 Investigación/ipythonnotebooks/AurigaPy/samples/line.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="12" column="31" selection-start-line="12" selection-start-column="31" selection-end-line="12" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../../03 Investigación/ipythonnotebooks/AurigaPy/samples/giro.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="17" column="8" selection-start-line="17" selection-start-column="8" selection-end-line="17" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../../03 Investigación/ipythonnotebooks/AurigaPy/samples/command.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="207">
+          <caret line="45" selection-start-line="45" selection-end-line="45" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/../../../03 Investigación/ipythonnotebooks/AurigaPy/aurigapy.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1072">
-          <caret line="171" column="59" lean-forward="true" selection-start-line="171" selection-start-column="59" selection-end-line="171" selection-end-column="59" />
+        <state relative-caret-position="210">
+          <caret line="14" column="16" selection-start-line="14" selection-start-column="16" selection-end-line="14" selection-end-column="16" />
           <folding>
             <element signature="e#17#39#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../../03 Investigación/ipythonnotebooks/AurigaPy/samples/encoder_rotate.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="10" column="8" lean-forward="true" selection-start-line="10" selection-start-column="8" selection-end-line="10" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../../03 Investigación/ipythonnotebooks/AurigaPy/samples/move_example.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="8" column="33" lean-forward="true" selection-start-line="8" selection-start-column="33" selection-end-line="8" selection-end-column="33" />
         </state>
       </provider>
     </entry>

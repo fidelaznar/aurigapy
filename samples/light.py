@@ -10,9 +10,9 @@ def timestamp():
 ap = AurigaPy(debug=False)
 
 bluetooth = "/dev/tty.Makeblock-ELETSPP"
-usb = "/dev/tty.wchusbserial1410"
+usb = "/dev/tty.wchusbserial1420"
 
-ap.connect(bluetooth)
+ap.connect(usb)
 print("Conectado")
 
 sleep(2)

@@ -17,7 +17,7 @@ def onColor(value,timeout):
 ap = AurigaPy(debug=False)
 
 bluetooth = "/dev/tty.Makeblock-ELETSPP"
-usb = "/dev/tty.wchusbserial410"
+usb = "/dev/tty.wchusbserial1420"
 
 ap.connect(usb)
 print("Conectado")
@@ -39,7 +39,8 @@ for i in range(400):
     rb = randrange(0, 10)
     rg = randrange(0, 10)
     ap.set_led_onboard(lid, r=rr, g=rg, b=rb, callback=onColor)
-    sleep(3)
+
+sleep(3)
 
 
 print("Reset")

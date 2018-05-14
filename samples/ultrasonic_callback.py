@@ -7,6 +7,10 @@ def timestamp():
     return strftime("%Y-%m-%d %H:%M:%S", gmtime())
 
 
+def on_reading(value, timeout):
+    print("%r > %r (%r)" % (timestamp(), value, timeout))
+
+
 ap = AurigaPy(debug=False)
 
 bluetooth = "/dev/tty.Makeblock-ELETSPP"
@@ -18,11 +22,10 @@ print("Conectado")
 sleep(2)
 
 for i in range(100):
-    x = ap.get_gyro_sensor_onboard("x")
-    y = ap.get_gyro_sensor_onboard("y")
-    z = ap.get_gyro_sensor_onboard("z")
-    data = str((x, y, z))
-    print("%r > %r " % (timestamp(), data))
+    r = ap.get_ultrasonic_reading(10 , on_reading)
+    sleep(0.2)
 
+
+sleep(1)
 ap.reset_robot()
 ap.close()

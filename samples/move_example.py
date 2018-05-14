@@ -6,23 +6,19 @@ from time import gmtime, strftime
 ap = AurigaPy(debug=False)
 
 bluetooth = "/dev/tty.Makeblock-ELETSPP"
-usb = "/dev/tty.wchusbserial1410"
+usb = "/dev/tty.wchusbserial1420"
 
 
 def timestamp():
     return strftime("%Y-%m-%d %H:%M:%S", gmtime())
 
 
-
 print("%r Conectando..." % timestamp())
-ap.connect_wait_no_response(bluetooth)
+ap.connect(bluetooth)
 sleep(3)
 print("%r Conectado!" % timestamp())
 
-
-#speed [0,255]
-
-#TODO: ver los delays de esta función, yo creo que pueden ser menores
+# speed [0,255]
 ap.set_command(command="forward", speed=40)
 sleep(3)
 ap.set_command(command="right", speed=40)

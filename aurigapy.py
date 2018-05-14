@@ -9,6 +9,7 @@ import glob
 import sys
 
 from frame import Frame
+from frame import short2bytes, long2bytes
 
 
 class SerialCom:
@@ -89,6 +90,7 @@ class Response:
 
     def is_timeout(self):
         t_max = self.timestamp + self.timeout
+        # print(self.timestamp, self.timeout, t_max,time.time())
 
         if t_max < time.time():
             return True
@@ -115,7 +117,7 @@ class AurigaPy:
 
     def connect(self, port):
 
-        rp = Response.generate_response_block(Frame.FRAME_TYPE_VERSION, timeout=2)
+        rp = Response.generate_response_block(Frame.FRAME_TYPE_VERSION, timeout=5)
         self.add_responder(rp)
 
         self._serial.connect(port)
@@ -149,16 +151,20 @@ class AurigaPy:
                 if r.timestamp > frame.timestamp:
                     # El frame es mas nuevo que el callback, no es compatible
                     if self.debug:
-                        print("Frame of type %r discarted: %r" % (frame.frame_type, frame))
+                        print("Frame of type %r discarted (timeout): %r" % (frame.frame_type, frame))
                 else:
                     # Es compatible por tipo?
                     if r.response_type == frame.frame_type:
                         # Es compatible por tipo
 
                         if r.response_callback is None:
+                            if self.debug:
+                                print("Processed callback event (data %r)" % frame.frame_value)
                             r.response_event_data = frame.frame_value
                             r.response_event.set()  # Se trata de una llamada blocking. Le doy paso
                         else:
+                            if self.debug:
+                                print("Processed callback")
                             r.response_callback(value=frame.frame_value, timeout=False)  # Llamo el callback
                     else:
                         # No compatible por tipo
@@ -172,6 +178,7 @@ class AurigaPy:
                                     discart_callback = True
                                     break
                         else:
+                            print("Discart callback")
                             discart_callback = True
 
                         # Hay un callback posterior compatible. Descarto este
@@ -189,7 +196,7 @@ class AurigaPy:
         else:
             # No hay callbacks. Se descarta el frame
             if self.debug:
-                print("Frame of type %r discarted: %r" % (frame.frame_type, frame))
+                print("Frame of type %r discarted (no callbacks): %r" % (frame.frame_type, frame))
 
     def _data_reader(self):
         """
@@ -205,7 +212,7 @@ class AurigaPy:
                     r = ord(self._serial.read())
                     self._read_buffer.append(r)
 
-                sleep(0.01)
+                # sleep(0.01)
 
                 # Si existe un paquete lo proceso y borro el bufer de lectura
                 if Frame.is_frame(self._read_buffer):
@@ -216,13 +223,15 @@ class AurigaPy:
                     self._process_frame(frame)
                     self._read_buffer = []
             else:
-                sleep(0.5)
+                sleep(0.1)
                 # Nota: se podrian descartar paquetes si no se mandase todo seguido.
                 self._read_buffer = []
 
             # Verifico el timeout de los callbacks
             for r in self._responsers:
                 if r.is_timeout():
+                    if self.debug:
+                        print("Callback timeout")
                     if r.response_callback is None:
                         r.response_event.set()  # Se trata de una llamada blocking. Le doy paso
                     else:
@@ -274,7 +283,6 @@ class AurigaPy:
         if callback is None:
             rp.wait_blocking()
 
-
     # ff 55 0b 00 02 3e 01 <slot> <long4 degrees> 0 0 <short2 vel>
     def set_encoder_motor_rotate(self, slot, degrees, speed, callback=None):
         assert slot == 1 or slot == 2, "Error, slot not defined"
@@ -283,6 +291,7 @@ class AurigaPy:
             rp = Response.generate_response_block(Frame.FRAME_TYPE_ACK, timeout=0.1)
         else:
             rp = Response.generate_response_async(callback, Frame.FRAME_TYPE_ACK)
+        self.add_responder(rp)
 
         data = bytearray([0xff, 0x55, 0x0b, 0x00, 0x02, 0x3e, 0x01, slot] +
                          long2bytes(degrees) +
@@ -293,7 +302,6 @@ class AurigaPy:
         if callback is None:
             rp.wait_blocking()
 
-
     def set_command_until(self, command, degrees, speed, callback=None):
         # ff 55 0b 00 02 3e 05 <cmd> <4long degrees> <2short speed>
         commands = ["forward", "backward", "left", "right"]
@@ -301,9 +309,10 @@ class AurigaPy:
         ind = 1 + commands.index(command)
 
         if callback is None:
-            rp = Response.generate_response_block(Frame.FRAME_TYPE_ACK, timeout=0.1)
+            rp = Response.generate_response_block(Frame.FRAME_TYPE_ACK, timeout=2)
         else:
             rp = Response.generate_response_async(callback, Frame.FRAME_TYPE_ACK)
+        self.add_responder(rp)
 
         data = bytearray([0xff, 0x55, 0x0b, 0x00, 0x02, 0x3e, 0x05, ind] +
                          long2bytes(degrees) +
@@ -314,7 +323,6 @@ class AurigaPy:
 
         if callback is None:
             rp.wait_blocking()
-
 
     def set_command(self, command, speed, callback=None):
         # ff 55 07 00 02 05 <2short speedleft> <2short speedright>
@@ -337,9 +345,10 @@ class AurigaPy:
             assert True, "Error in set_command"
 
         if callback is None:
-            rp = Response.generate_response_block(Frame.FRAME_TYPE_ACK, timeout=0.1)
+            rp = Response.generate_response_block(Frame.FRAME_TYPE_ACK, timeout=2)
         else:
             rp = Response.generate_response_async(callback, Frame.FRAME_TYPE_ACK)
+        self.add_responder(rp)
 
         data = bytearray([0xff, 0x55, 0x07, 0x00, 0x02, 0x5] +
                          short2bytes(speed_left) +
@@ -351,23 +360,38 @@ class AurigaPy:
         if callback is None:
             rp.wait_blocking()
 
-
-
-    # START TODO:
-
     # ff 55 06 00 01 3d 00 <slot> 01
     def get_encoder_motor_degrees(self, slot, callback=None):
         assert slot == 1 or slot == 2, "Error, slot not defined"
 
         if callback is None:
-            rp = Response.generate_response_block(Frame.FRAME_TYPE_ACK, timeout=0.1)
+            rp = Response.generate_response_block(Frame.FRAME_TYPE_LONG, timeout=3)
         else:
-            rp = Response.generate_response_async(callback, Frame.FRAME_TYPE_ACK)
+            rp = Response.generate_response_async(callback, Frame.FRAME_TYPE_LONG)
+        self.add_responder(rp)
 
         data = bytearray([0xff, 0x55, 6, 0, 1, 0x3d, 0, slot, 1])
         # print '[{}]'.format(', '.join(hex(x) for x in data))
         self._write(data)
 
+        if callback is None:
+            rp.wait_blocking()
+
+        return rp.response_event_data
+
+    # ff 55 06 00 01 3d 00 <slot> 02
+    def get_encoder_motor_speed(self, slot, callback=None):
+        assert slot == 1 or slot == 2, "Error, slot not defined"
+
+        if callback is None:
+            rp = Response.generate_response_block(Frame.FRAME_TYPE_FLOAT, timeout=3)
+        else:
+            rp = Response.generate_response_async(callback, Frame.FRAME_TYPE_FLOAT)
+        self.add_responder(rp)
+
+        data = bytearray([0xff, 0x55, 6, 0, 1, 0x3d, 0, slot, 2])
+        # print '[{}]'.format(', '.join(hex(x) for x in data))
+        self._write(data)
 
         if callback is None:
             rp.wait_blocking()
@@ -376,17 +400,37 @@ class AurigaPy:
 
     # ff 55 04 00 01 01 <port>
     def get_ultrasonic_reading(self, port, callback=None):
-        self._prepare_callback(callback)
+
+        if callback is None:
+            rp = Response.generate_response_block(Frame.FRAME_TYPE_FLOAT, timeout=0.3)
+        else:
+            rp = Response.generate_response_async(callback, Frame.FRAME_TYPE_FLOAT)
+        self.add_responder(rp)
+
         data = bytearray([0xff, 0x55, 4, 0, 1, 1, port])
         self._write(data)
-        return self._process_callback(callback)
+
+        if callback is None:
+            rp.wait_blocking()
+
+        return rp.response_event_data
 
     # ff 55 04 00 01 03 <port>
     def get_light_sensor(self, port, callback=None):
-        self._prepare_callback(callback)
+
+        if callback is None:
+            rp = Response.generate_response_block(Frame.FRAME_TYPE_FLOAT, timeout=0.3)
+        else:
+            rp = Response.generate_response_async(callback, Frame.FRAME_TYPE_FLOAT)
+        self.add_responder(rp)
+
         data = bytearray([0xff, 0x55, 4, 0, 1, 3, port])
         self._write(data)
-        return self._process_callback(callback)
+
+        if callback is None:
+            rp.wait_blocking()
+
+        return rp.response_event_data
 
     def get_light_sensor_onboard(self, port, callback=None):
         assert port == 1 or port == 2, "Error, port not defined"
@@ -395,10 +439,20 @@ class AurigaPy:
 
     # ff 55 04 00 01 07 <port>
     def get_sound_sensor(self, port, callback=None):
-        self._prepare_callback(callback)
+
+        if callback is None:
+            rp = Response.generate_response_block(Frame.FRAME_TYPE_FLOAT, timeout=0.3)
+        else:
+            rp = Response.generate_response_async(callback, Frame.FRAME_TYPE_FLOAT)
+        self.add_responder(rp)
+
         data = bytearray([0xff, 0x55, 4, 0, 1, 7, port])
         self._write(data)
-        return self._process_callback(callback)
+
+        if callback is None:
+            rp.wait_blocking()
+
+        return rp.response_event_data
 
     def get_sound_sensor_onboard(self, callback=None):
         port = 0x0e
@@ -406,17 +460,37 @@ class AurigaPy:
 
     # ff 55 04 00 01 1b 0d
     def get_temperature_sensor_onboard(self, callback=None):
-        self._prepare_callback(callback)
+
+        if callback is None:
+            rp = Response.generate_response_block(Frame.FRAME_TYPE_FLOAT, timeout=0.3)
+        else:
+            rp = Response.generate_response_async(callback, Frame.FRAME_TYPE_FLOAT)
+        self.add_responder(rp)
+
         data = bytearray([0xff, 0x55, 4, 0, 1, 0x1b, 0x0d])
         self._write(data)
-        return self._process_callback(callback)
+
+        if callback is None:
+            rp.wait_blocking()
+
+        return rp.response_event_data
 
     # ff 55 04 00 01 11 <port>
     def get_line_sensor(self, port, callback=None):
-        self._prepare_callback(callback)
+
+        if callback is None:
+            rp = Response.generate_response_block(Frame.FRAME_TYPE_FLOAT, timeout=0.3)
+        else:
+            rp = Response.generate_response_async(callback, Frame.FRAME_TYPE_FLOAT)
+        self.add_responder(rp)
+
         data = bytearray([0xff, 0x55, 4, 0, 1, 0x11, port])
         self._write(data)
-        return self._process_callback(callback)
+
+        if callback is None:
+            rp.wait_blocking()
+
+        return rp.response_event_data
 
     # ff 55 05 00 01 06 01 <axis>
     def get_gyro_sensor_onboard(self, axis, callback=None):
@@ -424,14 +498,19 @@ class AurigaPy:
         assert axis in axis_opt, "Error, axis %r not defined in %r" % (axis, axis_opt)
         axis_ind = 1 + axis_opt.index(axis)
 
-        self._prepare_callback(callback)
+        if callback is None:
+            rp = Response.generate_response_block(Frame.FRAME_TYPE_FLOAT, timeout=0.3)
+        else:
+            rp = Response.generate_response_async(callback, Frame.FRAME_TYPE_FLOAT)
+        self.add_responder(rp)
+
         data = bytearray([0xff, 0x55, 5, 0, 1, 6, 1, axis_ind])
         self._write(data)
-        return self._process_callback(callback)
 
-    #END TODO
+        if callback is None:
+            rp.wait_blocking()
 
-
+        return rp.response_event_data
 
     def close(self):
 
