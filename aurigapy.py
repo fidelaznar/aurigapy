@@ -1,105 +1,13 @@
 # coding=utf-8
 
-
-from time import sleep
-import time
+from time import sleep, time
 import threading
-import serial
-import glob
-import sys
 
 from frame import Frame
 from frame import short2bytes, long2bytes
 
-
-class SerialCom:
-    """
-    From <https://github.com/Kreativadelar>
-    """
-
-    def __init__(self):
-        self._serial = None
-
-    def connect(self, port='/dev/tty.Makeblock-ELETSPP'):
-        try:
-            self._serial = serial.Serial(port, 115200, timeout=4)
-        except:
-            assert False, "Error: cannot open this port: " + port
-
-    def device(self):
-        return self._serial
-
-    @staticmethod
-    def scan_serial_ports():
-        if sys.platform.startswith('win'):
-            ports = ['COM%s' % (i + 1) for i in range(256)]
-        elif sys.platform.startswith('linux') or sys.platform.startswith('cygwin'):
-            ports = glob.glob('/dev/tty[A-Za-z]*')
-        elif sys.platform.startswith('darwin'):
-            ports = glob.glob('/dev/tty.*')
-        else:
-            raise EnvironmentError('Unsupported platform')
-        result = []
-        for port in ports:
-            s = serial.Serial()
-            s.port = port
-            s.close()
-            result.append(port)
-        return result
-
-    def write(self, data):
-        self._serial.write(data)
-
-    def read(self):
-        return self._serial.read()
-
-    def is_open(self):
-        return self._serial.isOpen()
-
-    def in_waiting(self):
-        return self._serial.inWaiting()
-
-    def close(self):
-        self._serial.close()
-
-
-class Response:
-    def __init__(self, timestamp, timeout, response_type, response_callback, response_event=None):
-        self.timestamp = timestamp
-        self.timeout = timeout
-        self.response_type = response_type
-        self.response_callback = response_callback
-        self.response_event = response_event
-        self.response_event_data = None
-
-    @staticmethod
-    def generate_response_async(callback, response_type, timeout=0.3):
-        """
-
-        :param callback: función con 2 parámetros (valor_respuesta, timeout). Timeout es true si se ha llamado
-        por timeout y no por respuesta
-        :param response_type:
-        :param timeout:
-        :return:
-        """
-        return Response(time.time(), timeout, response_type, callback, None)
-
-    @staticmethod
-    def generate_response_block(response_type, timeout=0.3):
-        return Response(time.time(), timeout, response_type, None, threading.Event())
-
-    def is_timeout(self):
-        t_max = self.timestamp + self.timeout
-        # print(self.timestamp, self.timeout, t_max,time.time())
-
-        if t_max < time.time():
-            return True
-        else:
-            return False
-
-    def wait_blocking(self):
-        assert self.response_event is not None, "Error, response is not blocking"
-        self.response_event.wait()
+from serialcom import SerialCom
+from response import Response
 
 
 class AurigaPy:
@@ -284,7 +192,7 @@ class AurigaPy:
             rp.wait_blocking()
 
     # ff 55 0b 00 02 3e 01 <slot> <long4 degrees> 0 0 <short2 vel>
-    def set_encoder_motor_rotate(self, slot, degrees, speed, callback=None):
+    def set_encoder_motor_rotate_until(self, slot, degrees, speed, callback=None):
         assert slot == 1 or slot == 2, "Error, slot not defined"
 
         if callback is None:
@@ -297,6 +205,24 @@ class AurigaPy:
                          long2bytes(degrees) +
                          short2bytes(speed))
         # print '[{}]'.format(', '.join(hex(x) for x in data))
+        self._write(data)
+
+        if callback is None:
+            rp.wait_blocking()
+
+    # ff 55 07 00 02 3e 02 <slot> 64 00
+    def set_encoder_motor_rotate(self, slot, speed, callback=None):
+        assert slot == 1 or slot == 2, "Error, slot not defined"
+
+        if callback is None:
+            rp = Response.generate_response_block(Frame.FRAME_TYPE_ACK, timeout=0.1)
+        else:
+            rp = Response.generate_response_async(callback, Frame.FRAME_TYPE_ACK)
+        self.add_responder(rp)
+
+        data = bytearray([0xff, 0x55, 0x07, 0x00, 0x02, 0x3e, 0x02, slot] +
+                         short2bytes(speed))
+        #print '[{}]'.format(', '.join(hex(x) for x in data))
         self._write(data)
 
         if callback is None:
@@ -323,6 +249,28 @@ class AurigaPy:
 
         if callback is None:
             rp.wait_blocking()
+
+    def move_to(self, command, degrees, speed):
+        """
+        Execute the movement and return when finished
+        :param command:
+        :param degrees:
+        :param speed:
+        :param callback:
+        :return:
+        """
+        self.set_command_until(command, degrees, speed, None)
+        sleep(0.5)
+
+        vel = 0.01
+        #Espero a que termine de moverse
+        while vel != 0:
+            e1 = abs(self.get_encoder_motor_speed(1))
+            e2 = abs(self.get_encoder_motor_speed(2))
+            vel = e1 + e2 if e1 is not None and e2 is not None else 0.01
+            print(vel)
+            sleep(0.1)
+
 
     def set_command(self, command, speed, callback=None):
         # ff 55 07 00 02 05 <2short speedleft> <2short speedright>

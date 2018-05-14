@@ -8,6 +8,7 @@ ap = AurigaPy(debug=False)
 bluetooth = "/dev/tty.Makeblock-ELETSPP"
 usb = "/dev/tty.wchusbserial1420"
 
+
 def timestamp():
     return strftime("%Y-%m-%d %H:%M:%S", gmtime())
 
@@ -15,7 +16,6 @@ def timestamp():
 print("%r Conectando..." % timestamp())
 ap.connect(usb)
 print("%r Conectado!" % timestamp())
-
 
 print("Encoder 1 at: ", ap.get_encoder_motor_degrees(1))
 
@@ -28,10 +28,10 @@ sleep(1)
 # Espero a que termine
 vel = 0.01
 while vel != 0:
-    t = ap.get_encoder_motor_speed(1)
+    t = abs(ap.get_encoder_motor_speed(1))
     if t is not None:
         vel = t
-    t = ap.get_encoder_motor_speed(2)
+    t = abs(ap.get_encoder_motor_speed(2))
     if t is not None:
         vel += t
     print(vel)
