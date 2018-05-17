@@ -33,6 +33,10 @@ class AurigaPy:
         self.th.start()
 
         rp.wait_blocking()
+        self.set_led_onboard(0, 125, 125, 125)
+        sleep(0.1)
+        self.set_led_onboard(0, 0, 0, 0)
+        sleep(0.1)
 
     def _process_frame(self, frame):
 
@@ -132,7 +136,7 @@ class AurigaPy:
                     self._read_buffer = []
             else:
                 sleep(0.1)
-                # Nota: se podrian descartar paquetes si no se mandase todo seguido.
+                # Nota: se podrian perder paquetes si no se mandase seguido.
                 self._read_buffer = []
 
             # Verifico el timeout de los callbacks
@@ -170,6 +174,25 @@ class AurigaPy:
         self._read_buffer = []
 
         rp.wait_blocking()
+
+    # ff 55 08 00 02 22 2d <short2 sound_pitch> <short2 duration>
+    def play_sound(self, sound=131, duration_ms=1000, callback=None):
+
+        if callback is None:
+            rp = Response.generate_response_block(Frame.FRAME_TYPE_ACK, timeout=0.1)
+        else:
+            rp = Response.generate_response_async(callback, Frame.FRAME_TYPE_ACK)
+
+        self.add_responder(rp)
+
+        data = bytearray([0xff, 0x55, 0x08, 0x00, 0x02, 0x22, 0x2d] +
+                         short2bytes(sound) +
+                         short2bytes(duration_ms))
+        # print '[{}]'.format(', '.join(hex(x) for x in data))
+        self._write(data)
+
+        if callback is None:
+            rp.wait_blocking()
 
     # ff 55 09 00 02 08 00 02
     # Led 0 son todos
@@ -222,7 +245,7 @@ class AurigaPy:
 
         data = bytearray([0xff, 0x55, 0x07, 0x00, 0x02, 0x3e, 0x02, slot] +
                          short2bytes(speed))
-        #print '[{}]'.format(', '.join(hex(x) for x in data))
+        # print '[{}]'.format(', '.join(hex(x) for x in data))
         self._write(data)
 
         if callback is None:
@@ -263,13 +286,12 @@ class AurigaPy:
         sleep(0.5)
 
         vel = 0.01
-        #Espero a que termine de moverse
+        # Espero a que termine de moverse
         while vel != 0:
             e1 = abs(self.get_encoder_motor_speed(1))
             e2 = abs(self.get_encoder_motor_speed(2))
             vel = e1 + e2 if e1 is not None and e2 is not None else 0.01
             sleep(0.1)
-
 
     def set_command(self, command, speed, callback=None):
         # ff 55 07 00 02 05 <2short speedleft> <2short speedright>
