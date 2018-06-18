@@ -22,7 +22,7 @@ print("%r Conectado!" % timestamp())
 
 
 print("Moving 1m...")
-ap.move_to(command="forward", degrees=1910, speed=125)
+ap.move_to(command="forward", degrees=1910, speed=255)
 print("End Moving...")
 print("Closing...")
 

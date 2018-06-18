@@ -129,7 +129,7 @@ class AurigaPy:
                 # Si existe un paquete lo proceso y borro el bufer de lectura
                 if Frame.is_frame(self._read_buffer):
                     if self.debug:
-                        print 'Processing [{}]'.format(', '.join(hex(x) for x in self._read_buffer))
+                        print('Processing [{}]'.format(', '.join(hex(x) for x in self._read_buffer)))
 
                     frame = Frame.generate_from_data(list(self._read_buffer))
                     self._process_frame(frame)
@@ -163,7 +163,7 @@ class AurigaPy:
 
     def _write(self, data):
         if self.debug:
-            print 'Writing [{}]'.format(', '.join(hex(x) for x in data))
+            print('Writing [{}]'.format(', '.join(hex(x) for x in data)))
         self._serial.write(data)
 
     def reset_robot(self):

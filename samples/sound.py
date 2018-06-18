@@ -12,7 +12,7 @@ ap = AurigaPy(debug=False)
 bluetooth = "/dev/tty.Makeblock-ELETSPP"
 usb = "/dev/tty.wchusbserial1420"
 
-ap.connect(usb)
+ap.connect(bluetooth)
 print("Conectado")
 
 sleep(2)
