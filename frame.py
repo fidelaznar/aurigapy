@@ -7,7 +7,7 @@ def float2bytes(fval):
     From <https://github.com/Kreativadelar>
     """
     val = struct.pack("f", fval)
-    return [ord(val[0]), ord(val[1]), ord(val[2]), ord(val[3])]
+    return [val[0], val[1], val[2], val[3]]
 
 
 def long2bytes(lval):
@@ -15,7 +15,7 @@ def long2bytes(lval):
     From <https://github.com/Kreativadelar>
     """
     val = struct.pack("=l", lval)
-    return [ord(val[0]), ord(val[1]), ord(val[2]), ord(val[3])]
+    return [val[0], val[1], val[2], val[3]]
 
 
 def bytes2long(data):
@@ -35,7 +35,7 @@ def short2bytes(sval):
     From <https://github.com/Kreativadelar>
     """
     val = struct.pack("h", sval)
-    return [ord(val[0]), ord(val[1])]
+    return [val[0], val[1]]
 
 
 def char2byte(cval):
@@ -43,7 +43,7 @@ def char2byte(cval):
     From <https://github.com/Kreativadelar>
     """
     val = struct.pack("b", cval)
-    return ord(val[0])
+    return val[0]
 
 
 class Frame:
