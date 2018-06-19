@@ -71,7 +71,7 @@ class Frame:
         self.frame_value = frame_value
 
     def __str__(self):
-        print '[{}]'.format(', '.join(hex(x) for x in self.frame_data))
+        print('[{}]'.format(', '.join(hex(x) for x in self.frame_data)))
 
     @staticmethod
     def is_frame(data):

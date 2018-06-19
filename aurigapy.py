@@ -3,11 +3,11 @@
 from time import sleep, time
 import threading
 
-from frame import Frame
-from frame import short2bytes, long2bytes
+from aurigapy.frame import Frame
+from aurigapy.frame import short2bytes, long2bytes
 
-from serialcom import SerialCom
-from response import Response
+from aurigapy.serialcom import SerialCom
+from aurigapy.response import Response
 
 
 class AurigaPy:
@@ -121,8 +121,10 @@ class AurigaPy:
             if self._serial.is_open() is True:
                 n = self._serial.in_waiting()
                 for i in range(n):
-                    r = ord(self._serial.read())
-                    self._read_buffer.append(r)
+                    data = self._serial.read()
+                    if len(data) != 0:
+                        r = ord(data)
+                        self._read_buffer.append(r)
 
                 # sleep(0.01)
 
@@ -454,6 +456,23 @@ class AurigaPy:
         self.add_responder(rp)
 
         data = bytearray([0xff, 0x55, 4, 0, 1, 0x11, port])
+        self._write(data)
+
+        if callback is None:
+            rp.wait_blocking()
+
+        return rp.response_event_data
+
+    # ff 55 04 00 01 1a <port>
+    def get_compass_sensor(self, port, callback=None):
+
+        if callback is None:
+            rp = Response.generate_response_block(Frame.FRAME_TYPE_FLOAT, timeout=0.3)
+        else:
+            rp = Response.generate_response_async(callback, Frame.FRAME_TYPE_FLOAT)
+        self.add_responder(rp)
+
+        data = bytearray([0xff, 0x55, 4, 0, 1, 0x1a, port])
         self._write(data)
 
         if callback is None:
