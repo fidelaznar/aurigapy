@@ -1,4 +1,4 @@
-from aurigapy import *
+from aurigapy.aurigapy import *
 from time import sleep
 from time import gmtime, strftime
 

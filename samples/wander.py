@@ -1,5 +1,5 @@
 # coding=utf-8
-from aurigapy import *
+from aurigapy.aurigapy import *
 from time import *
 import numpy as np
 
@@ -28,7 +28,7 @@ def ultrasonic_read():
     tr = 0
     times = 3
     for i in range(times):
-        r = ap.get_ultrasonic_reading(10)
+        r = ap.get_ultrasonic_reading(8)
         if r is not None:
             tr += r
 

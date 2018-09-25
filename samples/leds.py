@@ -1,4 +1,4 @@
-from aurigapy import *
+from aurigapy.aurigapy import *
 from time import sleep
 from time import gmtime, strftime
 from random import randrange
@@ -19,7 +19,7 @@ ap = AurigaPy(debug=False)
 bluetooth = "/dev/tty.Makeblock-ELETSPP"
 usb = "/dev/tty.wchusbserial1420"
 
-ap.connect(usb)
+ap.connect(bluetooth)
 print("Conectado")
 
 sleep(2)
